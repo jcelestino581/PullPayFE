@@ -64,7 +64,7 @@ export default function ProfilePage() {
                 throw new Error('User is not logged in.')
             }
 
-            const response = await fetch('http://127.0.0.1:8000/api/user/', {
+            const response = await fetch('http://127.0.0.1:8000/user/', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ export default function ProfilePage() {
                     <CardTitle>Associated Churches</CardTitle>
                     <CardDescription>Churches you're connected with</CardDescription>
                 </CardHeader>
-                <CardContent>
+                {/* <CardContent>
                     {user.churches.length > 0 ? (
                         <ul className="list-inside list-disc">
                             {user.churches.map((church) => (
@@ -178,7 +178,7 @@ export default function ProfilePage() {
                     ) : (
                         <p>No churches associated.</p>
                     )}
-                </CardContent>
+                </CardContent> */}
             </Card>
         </div>
     )
