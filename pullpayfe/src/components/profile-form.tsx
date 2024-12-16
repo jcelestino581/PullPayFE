@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import axios from "axios"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -35,6 +36,7 @@ const formSchema = z.object({
 })
 
 export default function RegistrationForm() {
+    const router = useRouter(); // Initialize router
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -48,29 +50,50 @@ export default function RegistrationForm() {
     // Handle form submission
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            // Send the form data to your backend API
-            const response = await axios.post("http://127.0.0.1:8000/api/register/", {
+            // Step 1: Send the form data to your backend API for registration
+            const registrationResponse = await axios.post("http://127.0.0.1:8000/api/register/", {
                 first_name: values.first_name,
                 last_name: values.last_name,
                 email: values.email,
                 password: values.password,
-            })
+            });
 
-            // Handle success
-            if (response.status === 201) {
+            // Handle successful registration
+            if (registrationResponse.status === 201) {
                 toast({
                     title: "Registration Successful",
                     description: "Your account has been created.",
-                })
+                });
+
+                // Step 2: Automatically log in the user by sending login request
+                const loginResponse = await axios.post("http://127.0.0.1:8000/api/login/", {
+                    email: values.email,
+                    password: values.password,
+                });
+
+                if (loginResponse.status === 200) {
+                    // Store the authentication token in localStorage (or a secure cookie)
+                    const token = loginResponse.data.token;
+                    localStorage.setItem("authToken", token); // Store the token securely
+
+                    // Step 3: Redirect to the login page after successful registration
+                    router.push("/login"); // Change here from '/dashboard' to '/login'
+                } else {
+                    toast({
+                        title: "Login Error",
+                        description: "Failed to log in after registration. Please try again.",
+                        variant: "destructive",
+                    });
+                }
             }
         } catch (error) {
-            // Handle error
-            console.error("Registration failed", error)
+            // Handle errors (registration or login failures)
+            console.error("Registration or login failed", error);
             toast({
-                title: "Registration Failed",
-                description: "There was an error registering your account. Please try again.",
+                title: "Error",
+                description: "There was an error during registration or login. Please try again.",
                 variant: "destructive",
-            })
+            });
         }
     }
 

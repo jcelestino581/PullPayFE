@@ -1,30 +1,21 @@
-"use client"
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import "./globals.css"
+import { Inter } from 'next/font/google'
 
-import "./globals.css";
-import { useState } from "react";
-import React from "react";
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Set to true or false as needed
-
   return (
     <html lang="en">
-      <body>
-        {isLoggedIn ? (
-          <SidebarProvider>
-            <AppSidebar />
-            {children}
-          </SidebarProvider>
-        ) : (
-          <>{children}</>
-        )}
+      <body className={inter.className}>
+        <main className="min-h-screen flex flex-col">
+          {children}
+        </main>
       </body>
     </html>
-  );
+  )
 }
+
