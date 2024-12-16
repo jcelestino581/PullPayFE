@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
+import { ModeToggle } from "@/components/mode-toggle"
 
 const formSchema = z.object({
     username: z.string().min(1, "Username is required"),
@@ -52,7 +53,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="flex min-h-screen items-center justify-center">
             <Card className="w-[350px]">
                 <CardHeader>
                     <CardTitle>Login</CardTitle>
@@ -103,6 +104,7 @@ export default function LoginPage() {
                     <Button variant="link" className="px-0 font-normal">
                         Forgot password?
                     </Button>
+                    <ModeToggle />
                 </CardFooter>
             </Card>
         </div>
