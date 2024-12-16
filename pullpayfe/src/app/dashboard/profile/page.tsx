@@ -5,6 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { AlertCircle, Mail, User, Building } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { motion } from 'framer-motion'
 
 interface User {
     id: number
@@ -87,14 +91,11 @@ export default function ProfilePage() {
 
     if (error) {
         return (
-            <Card className="mx-auto mt-8 max-w-md">
-                <CardHeader>
-                    <CardTitle className="text-center text-red-500">Error</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-center">{error}</p>
-                </CardContent>
-            </Card>
+            <Alert variant="destructive" className="mx-auto mt-8 max-w-md">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+            </Alert>
         )
     }
 
@@ -107,79 +108,109 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="space-y-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Profile Information</CardTitle>
-                    <CardDescription>Your personal details</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {!isEditing ? (
-                        <>
-                            <p><strong>Name:</strong> {user.first_name} {user.last_name}</p>
-                            <p><strong>Email:</strong> {user.email}</p>
-                            <Button onClick={() => setIsEditing(true)} className="mt-4">
-                                Edit Profile
-                            </Button>
-                        </>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="first_name">First Name</Label>
-                                <Input
-                                    id="first_name"
-                                    name="first_name"
-                                    value={editedUser?.first_name || ''}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="last_name">Last Name</Label>
-                                <Input
-                                    id="last_name"
-                                    name="last_name"
-                                    value={editedUser?.last_name || ''}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={editedUser?.email || ''}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="space-x-2">
-                                <Button type="submit">Save Changes</Button>
-                                <Button variant="outline" onClick={() => setIsEditing(false)}>
-                                    Cancel
+        <div className="container mx-auto px-4 py-8">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <Card className="mb-8">
+                    <CardHeader className="flex flex-row items-center space-x-4 pb-2">
+                        <Avatar className="h-20 w-20">
+                            <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.first_name} ${user.last_name}`} alt={`${user.first_name} ${user.last_name}`} />
+                            <AvatarFallback>{user.first_name[0]}{user.last_name[0]}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                            <CardTitle className="text-3xl">{user.first_name} {user.last_name}</CardTitle>
+                            <CardDescription>{user.email}</CardDescription>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        {!isEditing ? (
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-2">
+                                    <User className="h-5 w-5 text-gray-500" />
+                                    <span>{user.first_name} {user.last_name}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Mail className="h-5 w-5 text-gray-500" />
+                                    <span>{user.email}</span>
+                                </div>
+                                <Button onClick={() => setIsEditing(true)} className="mt-4">
+                                    Edit Profile
                                 </Button>
                             </div>
-                        </form>
-                    )}
-                </CardContent>
-            </Card>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="first_name">First Name</Label>
+                                    <Input
+                                        id="first_name"
+                                        name="first_name"
+                                        value={editedUser?.first_name || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="last_name">Last Name</Label>
+                                    <Input
+                                        id="last_name"
+                                        name="last_name"
+                                        value={editedUser?.last_name || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        value={editedUser?.email || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="space-x-2">
+                                    <Button type="submit">Save Changes</Button>
+                                    <Button variant="outline" onClick={() => setIsEditing(false)}>
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </form>
+                        )}
+                    </CardContent>
+                </Card>
+            </motion.div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Associated Churches</CardTitle>
-                    <CardDescription>Churches you're connected with</CardDescription>
-                </CardHeader>
-                {/* <CardContent>
-                    {user.churches.length > 0 ? (
-                        <ul className="list-inside list-disc">
-                            {user.churches.map((church) => (
-                                <li key={church.id}>{church.name}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No churches associated.</p>
-                    )}
-                </CardContent> */}
-            </Card>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+            >
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center space-x-2">
+                            <Building className="h-6 w-6" />
+                            <span>Associated Churches</span>
+                        </CardTitle>
+                        <CardDescription>Churches you're connected with</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {user.churches && user.churches.length > 0 ? (
+                            <ul className="space-y-2">
+                                {user.churches.map((church) => (
+                                    <li key={church.id} className="flex items-center space-x-2">
+                                        <Building className="h-4 w-4 text-gray-500" />
+                                        <span>{church.name}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-gray-500 italic">No churches associated.</p>
+                        )}
+                    </CardContent>
+                </Card>
+            </motion.div>
         </div>
     )
 }

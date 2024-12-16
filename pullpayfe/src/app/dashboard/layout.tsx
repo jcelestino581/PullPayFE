@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { Home, Users, Church, LogOut } from 'lucide-react'
+import { Home, Users, Church, LogOut, DollarSign } from 'lucide-react'
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -42,6 +42,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                         <SidebarMenuButton onClick={() => router.push('/dashboard/churches')}>
                                             <Church className="mr-2 h-4 w-4" />
                                             <span>Churches</span>
+                                        </SidebarMenuButton>
+                                        <SidebarMenuButton onClick={() => router.push('/dashboard/transactions')}>
+                                            <DollarSign className="mr-2 h-4 w-4" />
+                                            <span>Transactions</span>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
