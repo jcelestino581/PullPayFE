@@ -1,10 +1,10 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Avatar, AvatarFallback,} from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, } from '@/components/ui/avatar'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -117,7 +117,7 @@ export default function Dashboard() {
                                 </Avatar>
                                 <div>
                                     <CardTitle className="text-2xl">Welcome, {user.first_name}!</CardTitle>
-                                    <CardDescription>Here's your dashboard overview</CardDescription>
+                                    <CardDescription>Here&apos;s your dashboard overview</CardDescription>
                                 </div>
                             </div>
                         </CardHeader>
@@ -158,7 +158,7 @@ export default function Dashboard() {
                                 <Building className="h-5 w-5" />
                                 <CardTitle>Associated Churches</CardTitle>
                             </div>
-                            <CardDescription>Churches you're connected with</CardDescription>
+                            <CardDescription>Churches you&apos;re connected with</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {user.churches.length > 0 ? (
@@ -201,7 +201,7 @@ export default function Dashboard() {
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-2">
                                         <DollarSign className="h-4 w-4 text-green-500" />
-                                        <span>Donation made to St. Mary's Church</span>
+                                        <span>Donation made to St. Mary&apos;s Church</span>
                                     </div>
                                     <Badge>2 days ago</Badge>
                                 </div>

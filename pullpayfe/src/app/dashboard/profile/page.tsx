@@ -193,7 +193,7 @@ export default function ProfilePage() {
                             <Building className="h-6 w-6" />
                             <span>Associated Churches</span>
                         </CardTitle>
-                        <CardDescription>Churches you're connected with</CardDescription>
+                        <CardDescription>Churches you&apos;re connected with</CardDescription>
                     </CardHeader>
                     <CardContent>
                         {user.churches && user.churches.length > 0 ? (

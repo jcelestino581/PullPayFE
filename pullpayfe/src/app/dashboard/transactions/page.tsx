@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { AlertCircle, DollarSign, Calendar, User, Building, Plus } from 'lucide-react'
+import { AlertCircle, DollarSign, Calendar, User, Building } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { motion } from 'framer-motion'
 import { Input } from '@/components/ui/input'
@@ -14,7 +14,6 @@ import { toast } from '@/components/ui/use-toast'
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -276,7 +275,7 @@ export default function TransactionsPage() {
                                 <PaginationItem>
                                     <PaginationPrevious
                                         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                        disabled={currentPage === 1}
+                                        className={currentPage === 1 ? "cursor-not-allowed opacity-50" : ""}
                                     />
                                 </PaginationItem>
                                 {[...Array(totalPages)].map((_, index) => (
@@ -292,12 +291,13 @@ export default function TransactionsPage() {
                                 <PaginationItem>
                                     <PaginationNext
                                         onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                        disabled={currentPage === totalPages}
+                                        className={currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""}
                                     />
                                 </PaginationItem>
                             </PaginationContent>
                         </Pagination>
                     </div>
+
                 </>
             )}
         </div>

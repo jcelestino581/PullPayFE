@@ -77,10 +77,10 @@ export function LoginForm() {
         // Handle unexpected API response
         setErrorMessage('Login failed. Please check your credentials and try again.')
       }
-    } catch (error: any) { // Typing the error
+    } catch (error: unknown) { // Use 'unknown' type instead of 'Error'
       // Handle login errors
       console.error('Login failed', error)
-      if (error.response && error.response.data) {
+      if (axios.isAxiosError(error) && error.response) {
         setErrorMessage(error.response.data.detail || 'An error occurred. Please try again.')
       } else {
         setErrorMessage('An error occurred. Please check your network connection and try again.')

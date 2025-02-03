@@ -18,6 +18,11 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // Ensure localStorage is accessed only on the client-side
+        if (typeof window === 'undefined') {
+          throw new Error('localStorage is not available in this environment')
+        }
+
         const accessToken = localStorage.getItem('access_token')
         if (!accessToken) {
           throw new Error('User is not logged in.')
@@ -80,7 +85,7 @@ export default function Dashboard() {
       <Card>
         <CardHeader>
           <CardTitle>Associated Churches</CardTitle>
-          <CardDescription>Churches you're connected with</CardDescription>
+          <CardDescription>Churches you&apos;re connected with</CardDescription>
         </CardHeader>
         <CardContent>
           {user.churches.length > 0 ? (
